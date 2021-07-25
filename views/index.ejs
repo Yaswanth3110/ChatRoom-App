@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <!-- <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+     -->
+     <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <h1>Welcome</h1>
+    <input type="text" id="from" ><br>
+    <input type="text" id="to" ><br>
+    <input type="text" id="message"><br>
+    <button onclick="sendMessage()">click</button>
+    <script>
+        console.log("connecting");
+        const socket = io("");
+        console.log("connected");
+        socket.emit("text", {message:"Hi", from:"yaswanth"});
+        socket.on("getMessage", (data)=>{
+            let me = document.getElementById("from").value ;
+            console.log(data);
+            if(data.to === me){
+                console.log("yeah");
+                document.write = data ;
+            }
+        });
+        socket.on("socketMessage", (data)=>{
+            console.log(data);
+            document.write(data);
+        });
+        socket.on("serverMessage", (data)=>{
+            console.log(data);
+            document.write(data);
+        })
+        function sendMessage() {
+                let data = {
+                    from:document.getElementById("from").value ,
+                    to:document.getElementById("to").value,
+                    message:document.getElementById("message").value 
+                };
+                socket.emit("text", data);
+        }
+    </script>
+</body>
+</html>
